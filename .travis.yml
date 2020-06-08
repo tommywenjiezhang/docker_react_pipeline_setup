@@ -1,0 +1,7 @@
+sudo: required
+services:
+    - docker
+before_install:
+    - docker build -f Dockerfile.dev -t tommywenjiezhang/docker_react_pipeline_setup .
+script:
+    - docker run -d --name docker_react_pipeline_setup tommywenjiezhang/docker_react_pipeline_setup npm run test 

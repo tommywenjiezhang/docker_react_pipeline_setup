@@ -8,10 +8,8 @@ script:
     - docker run -d --name docker_react_pipeline_setup tommywenjiezhang/docker_react_pipeline_setup npm run test -- --coverage
 deploy:
     provider: elasticbeanstalk
-    access_key_id:
-        secure: $AWS_ACCESS_KEY
-    secret_access_key:
-        secure: "$AWS_SECRET_KEY"
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY
     region: "us-east-2"
     app: "docker_react"
     env: "DockerReact-env"

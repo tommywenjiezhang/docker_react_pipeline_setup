@@ -5,11 +5,9 @@ services:
 before_install:
     - docker build -f Dockerfile.dev -t tommywenjiezhang/docker_react_pipeline_setup .
 script:
-    - docker run -d --name docker_react_pipeline_setup tommywenjiezhang/docker_react_pipeline_setup npm run test -- --coverage
+    - docker run -e CI=true --name docker_react_pipeline_setup tommywenjiezhang/docker_react_pipeline_setup npm run test -- --coverage
 deploy:
     provider: elasticbeanstalk
-    access_key_id: $AWS_ACCESS_KEY
-    secret_access_key: $AWS_SECRET_KEY
     region: "us-east-2"
     app: "docker_react"
     env: "DockerReact-env"
@@ -17,4 +15,5 @@ deploy:
     bucket_path: "docker_react"
     on:
         branch: master
-    
+    access_key_id: $AWS_ACCESS_KEY
+    secret_access_key: $AWS_SECRET_KEY

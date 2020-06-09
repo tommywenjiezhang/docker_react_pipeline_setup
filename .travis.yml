@@ -1,7 +1,22 @@
+language: generic
 sudo: required
 services:
     - docker
 before_install:
     - docker build -f Dockerfile.dev -t tommywenjiezhang/docker_react_pipeline_setup .
 script:
-    - docker run -d --name docker_react_pipeline_setup tommywenjiezhang/docker_react_pipeline_setup npm run test 
+    - docker run -d --name docker_react_pipeline_setup tommywenjiezhang/docker_react_pipeline_setup npm run test -- --coverage
+deploy:
+    provider: elasticbeanstalk
+    access_key_id:
+        secure: $AWS_ACCESS_KEY
+    secret_access_key:
+        secure: "$AWS_SECRET_KEY"
+    region: "us-east-2"
+    app: "docker_react"
+    env: "DockerReact-env"
+    bucket_name: "elasticbeanstalk-us-east-2-147966858632"
+    bucket_path: "docker_react"
+    on:
+        branch: master
+    
